@@ -6,22 +6,23 @@
 #include <numeric>
 #include <algorithm>
 #include <fstream>
-#include <sstream>
 #include <stdlib.h>
+#include <sstream>
 
+using namespace std;
 
-struct Duomenys {
+struct studentas {
     std::string Vard, Pav;
-    std::vector<int> paz = {};
+    std::vector<double> paz = {};
     int egz;
     float GALPAZ = 0;
 };
 
-void vardpavardegz_ivedimas(Duomenys Eil[], int i) //Funkcija, duodanti suvesti vardus ir pavares bei egzamino rezultata.
+void vardPavgz_ivedimas(studentas Eil[], int i) //Funkcija, duodanti suvesti vardus ir pavares bei egzamino rezultata.
 {
     std::cout << "Iveskite studento nr. " << i + 1 << " varda:\n";
     std::cin >> Eil[i].Vard;
-    std::cout << "Iveskite studento nr. " << i + 1 << " pavarde:\n";
+    std::cout << "Iveskite studento nr. " << i + 1 << " Pav:\n";
     std::cin >> Eil[i].Pav;
     std::cout << "Iveskite studento nr. " << i + 1 << " egzamino ivertinima:\n";
 
@@ -39,9 +40,9 @@ void vardpavardegz_ivedimas(Duomenys Eil[], int i) //Funkcija, duodanti suvesti 
     }
 }
 
-void mok_paz(Duomenys Eil[], int i) //Funkcija, duodanti ivesti vartotojui mokiniu pazymius.
+void mok_paz(studentas Eil[], int i) //Funkcija, duodanti ivesti vartotojui mokiniu pazymius.
 {
-    int laikinas;
+    double laikinas;
     std::cout << "Veskite studento pazymius, kaip manysite, kad pazymiu uztenka parasykite -1\n";
 
     for (;;)
@@ -73,7 +74,7 @@ int random_paz_generatorius() //Generuojame random skaiciu intervale nuo 1 iki 1
     return rand() % 10 + 1;
 }
 
-void random_paz_ivedimas(Duomenys Eil[], int i, int kiek_paz) //Ivedame automatiskai sugeneruotus pazymius.
+void random_paz_ivedimas(studentas Eil[], int i, int kiek_paz) //Ivedame automatiskai sugeneruotus pazymius.
 {
 
     for (int x = 0; x < kiek_paz; x++)
@@ -82,7 +83,7 @@ void random_paz_ivedimas(Duomenys Eil[], int i, int kiek_paz) //Ivedame automati
     }
 }
 
-void gal_paz_su_vidurkiu(Duomenys Eil[], int studentu_kiekis) //Galutinio pazymio skaiciavimas su vidurkiu.
+void gal_paz_su_vidurkiu(studentas Eil[], int studentu_kiekis) //Galutinio pazymio skaiciavimas su vidurkiu.
 {
     float Vidurkis;
     float Suma;
@@ -95,12 +96,12 @@ void gal_paz_su_vidurkiu(Duomenys Eil[], int studentu_kiekis) //Galutinio pazymi
     }
 }
 
-void rez_vid_print(Duomenys Eil[], int studentu_kiekis) //Atspausdina galutinius rezultatus su vidurkiu.
+void rez_vid_print(studentas Eil[], int studentu_kiekis) //Atspausdina galutinius rezultatus su vidurkiu.
 {
     std::cout << "\n\n";
-    std::cout << std::setw(20) << std::left << "Vardas"
-        << std::setw(20) << std::left << "Pavarde"
-        << std::setw(16) << std::left << "Galutinis(vid.)\n";
+    std::cout << std::setw(20) << std::left << "Vard"
+        << std::setw(20) << std::left << "Pav"
+        << std::setw(16) << std::left << "GALPAZ(vid.)\n";
     std::cout << std::left << "--------------------------------------------------------------------------\n";
     for (int i = 0; i < studentu_kiekis; i++)
     {
@@ -111,7 +112,7 @@ void rez_vid_print(Duomenys Eil[], int studentu_kiekis) //Atspausdina galutinius
     std::cout << "\n\n";
 }
 
-double medianos_skaiciavimas(std::vector<int> MokinioPazymiai) //Skaiciuojame mediana.
+double medianos_skaiciavimas(std::vector<double> MokinioPazymiai) //Skaiciuojame mediana.
 {
     int Dydis;
     Dydis = MokinioPazymiai.size();
@@ -136,15 +137,16 @@ double medianos_skaiciavimas(std::vector<int> MokinioPazymiai) //Skaiciuojame me
 
 }
 
-void gal_paz_su_mediana(Duomenys Eil[], int studentu_kiekis) //Galutinio pazymio skaiciavimas su mediana.
+void gal_paz_su_mediana(studentas Eil[], int studentu_kiekis) //Galutinio pazymio skaiciavimas su mediana.
 {
 
     for (int i = 0; i < studentu_kiekis; i++) {
-        Eil[i].GALPAZ = medianos_skaiciavimas(Eil[i].paz) * 0.4 + Eil[i].egz * 0.6;
+
+        Eil[i].GALPAZ = (medianos_skaiciavimas(Eil[i].paz) * 0.4 + Eil[i].egz * 0.6);
     }
 }
 
-void rez_med_print(Duomenys Eil[], int studentu_kiekis) //Atspausdina galutinius rezultatus su mediana.
+void rez_med_print(studentas Eil[], int studentu_kiekis) //Atspausdina galutinius rezultatus su mediana.
 {
     std::cout << "\n\n";
 
@@ -161,31 +163,60 @@ void rez_med_print(Duomenys Eil[], int studentu_kiekis) //Atspausdina galutinius
     std::cout << "\n\n";
 }
 
-void duom_nuskaitymas(Duomenys Eil[])
+bool palyginimas(studentas& studentasPirmas, studentas& studentasAntras)
 {
-    std::string line;
-    std::ifstream ifs("kursiokai.txt");
-    if (!ifs.is_open())
-    {
-        throw (ifs, "File could not be opened");
-    }
-    int g = 0;
-    int i = 0;
-    ifs >> std::ws;
-    getline(ifs >> std::ws, Eil[i].Vard);
-    while (i < 100)
-    {
-        
-        std::cout << Eil[i].Vard;
-        i++;
+    return studentasPirmas.Vard < studentasAntras.Vard;
+}
 
+double vidurkis(vector<double> namuDarbuPazymiai) {
+    double average;
+    average = accumulate(namuDarbuPazymiai.begin(), namuDarbuPazymiai.end(), 0) / namuDarbuPazymiai.size();
+    return average;
+}
+
+double mediana(vector<double> namuDarbuPazymiai) {
+    double mediana;
+    int ilgis = namuDarbuPazymiai.size();
+    sort(namuDarbuPazymiai.begin(), namuDarbuPazymiai.end());
+
+    if (ilgis % 2 == 0) {
+        return (namuDarbuPazymiai[ilgis / 2] + namuDarbuPazymiai[(ilgis / 2) - 1]) / 2.;
+    }
+    else {
+        return namuDarbuPazymiai[ilgis / 2];
+    }
+}
+
+bool palyginimas(studentas pirmas, studentas antras)
+{
+    return pirmas.Vard < antras.Vard;
+}
+
+void spaudinkStudenta(vector<studentas> grupe)
+{
+    ofstream output;
+    output.open("rezultatai.txt");
+    output << left << setw(20) << "Vardas" << setw(20) << "Pavarde" << setw(20) << "Galutinis(vid.)" << endl;
+    output << "---------------------------------------------------------------" << endl;
+    for (int i = 0; i < grupe.size() - 1; i++) {
+        output << fixed << left << setw(20) << grupe[i].Vard << setw(20) << grupe[i].Pav << setw(20) << setprecision(2) << grupe[i].GALPAZ << endl;
     }
 }
 
 
 int main()
 {
-    Duomenys Eil[25];
+    int stulpeliai = 0;
+    int eilutes = 0;
+    double laikinas;
+    string elementas;
+    string eil;
+    studentas stud;
+    vector <studentas> grupe;
+    double vidurk;
+    double median;
+    int isvestis = 0;
+    studentas Eil[25];
     std::string laikinas3;
     std::cout << "Jeigu norite, kad studentu pazymiai butu suvesti is failo, spauskite R.Jeigu norite suvesti duomenis patys - spauskite P.\n";
     std::cin >> laikinas3;
@@ -195,11 +226,51 @@ int main()
     }
     if (laikinas3 == "r" || laikinas3 == "R")
     {
-        duom_nuskaitymas(Eil);
-        std::cout << std::setw(20) << std::left << "Vardas"
-            << std::setw(20) << std::left << "Pavarde" <<
-            std::setw(18) << std::left << "Galutinis(vid.)/Galutinis(med.)\n"
-            << std::left << "---------------------------------------------------------------------\n";
+        cout << "Jei norite isvesti studento galutini pazymi su namu darbu vidurkiu iveskite 1, jei su mediana spasukite 0" << endl;
+        cin >> isvestis;
+        while (isvestis != 1 && isvestis != 0) {
+            cout << "Ivestas netikamas simbolis. Iveskite is naujo:" << endl;
+            cin >> isvestis;
+        }
+        ifstream openF("kursiokai.txt");
+        while (true)
+        {
+            if (!openF.eof())
+            {
+                getline(openF, eil);
+                eilutes++;
+                if (eilutes == 1) {
+                    stringstream s(eil);
+                    while (s >> elementas) {
+                        stulpeliai++;
+                    }
+                }
+                openF >> stud.Vard >> stud.Pav;
+                stulpeliai = stulpeliai - 2;
+                stud.paz.reserve(stulpeliai - 1);
+                for (int i = 0; i < stulpeliai - 1; i++) {
+                    openF >> laikinas;
+                    stud.paz.push_back(laikinas);
+                }
+
+                openF >> stud.egz;
+                if (isvestis == 1) {
+                    vidurk = vidurkis(stud.paz);
+                    stud.GALPAZ = 0.4 * vidurk + 0.6 * stud.egz;
+                }
+                else
+                {
+                    median = mediana(stud.paz);
+                    stud.GALPAZ = 0.4 * median + 0.6 * stud.egz;
+                }
+                grupe.push_back(stud);
+                stud.paz.clear();
+            }
+            else break;
+        }
+        openF.close();
+        //sort(grupe.begin(), grupe.end(), palyginimas);
+        spaudinkStudenta(grupe);
     }
 
     else {
@@ -234,7 +305,7 @@ int main()
             {
                 for (int i = 0; i < studentu_kiekis; i++)
                 {
-                    vardpavardegz_ivedimas(Eil, i);
+                    vardPavgz_ivedimas(Eil, i);
                     mok_paz(Eil, i);
                 }
             }
@@ -242,11 +313,11 @@ int main()
             {
                 for (int i = 0; i < studentu_kiekis; i++)
                 {
-                    vardpavardegz_ivedimas(Eil, i);
+                    vardPavgz_ivedimas(Eil, i);
                     random_paz_ivedimas(Eil, i, 5);
                 }
             }
-            std::cout << "Jeigu norite, kad studento galutinis pazymys butu skaiciuojamas imant vidurki, tuomet spauskite\"V\"\n Jeigu norite, kad galutinis pazymys butu skaiciuojamas imant mediana, spauskite\"M\"\n";
+            std::cout << "Jeigu norite, kad studento galutinis pazimys pazymys butu skaiciuojamas imant vidurki, tuomet spauskite\"V\"\n Jeigu norite, kad GALPAZ pazymys butu skaiciuojamas imant mediana, spauskite\"M\"\n";
             std::cin >> laikinas2;
             while (laikinas2 != "v" && laikinas2 != "V" && laikinas2 != "m" && laikinas2 != "M") {
                 std::cout << "Iveskite tai, ko prasoma.\n";
