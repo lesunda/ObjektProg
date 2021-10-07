@@ -226,7 +226,7 @@ int main()
     }
     if (laikinas3 == "r" || laikinas3 == "R")
     {
-        cout << "Jei norite isvesti studento galutini pazymi su namu darbu vidurkiu iveskite 1, jei su mediana spasukite 0" << endl;
+        cout << "Jei norite isvesti studento galutini pazymi su namu darbu vidurkiu iveskite 1, jei su mediana spauskite 0" << endl;
         cin >> isvestis;
         while (isvestis != 1 && isvestis != 0) {
             cout << "Ivestas netikamas simbolis. Iveskite is naujo:" << endl;
