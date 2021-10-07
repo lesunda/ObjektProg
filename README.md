@@ -4,4 +4,9 @@ Tai yra programa, kuri apskaičiuoja mokinio galutinį pažymį pagal tam tikrą
 
 ***V0.1 MASYVAS***
 
-Veikimas programos yra iš esmės lygiai toks pats kaip ir 'V0.1 VEKTORIUS'. Tik tiek, kad čia naudojamas dinaminis masyvas. 
+Veikimas programos yra iš esmės lygiai toks pats kaip ir 'V0.1 VEKTORIUS'. Tik tiek, kad čia naudojamas dinaminis masyvas.
+
+
+***V0.2***
+
+Ši programa mums leidžia pasirinkti ar norime duomenis nuskaityti iš failo, ar suvesti patys. Jeigu pasirenkame suvesti patys - programa veiks taip pat kaip ir V0.1 versija. Tačiau jeigu pasirenkame duomenis nuskaityti iš failo, tuomet duomenys yra nuskaitomi iš .txt tipo failo, bei suskaičiuojamas GP su pasirinktinai mediana arba vidurkiu. Galutinis rezultatas yra pateikiamas naujame .txt faile.
