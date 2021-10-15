@@ -1,12 +1,4 @@
-***V0.1 VEKTORIUS***
+***V0.4***
 
-Tai yra programa, kuri apskaičiuoja mokinio galutinį pažymį pagal tam tikrą formulę turint mokinio 'eilinius' pažymius. Iš pirmo programoje prašoma įvesti mokinių kiekį, tuomet prašoma įvesti kaip norėsite įvesti mokinių pažymius t.y ar patys įvesite, ar pasinaudosinte automatiniu pažymių sugeneravimu. Tuomet programa prašys jūsų įvesti studento vardą, pavardę jo egzamino įvertį, bei jo turimus pažymius, jeigu pasirinkote, kad pažymius vesite pats. Po viso to programa prašys pasirinkti kaip norite suskaičiuoti mokinių galutinį pažymį ar su mediana, ar su vidurkiu. Pasirinkę su kuo norėsite matyt apskaičiuotą gaulutinį mokinio įvertį ekrane jums pasirodys galutiniai kiekvieno mokinio pažymiai.
-
-***V0.1 MASYVAS***
-
-Veikimas programos yra iš esmės lygiai toks pats kaip ir 'V0.1 VEKTORIUS'. Tik tiek, kad čia naudojamas dinaminis masyvas.
-
-
-***V0.2***
-
-Ši programa mums leidžia pasirinkti ar norime duomenis nuskaityti iš failo, ar suvesti patys. Jeigu pasirenkame suvesti patys - programa veiks taip pat kaip ir V0.1 versija. Tačiau jeigu pasirenkame duomenis nuskaityti iš failo, tuomet duomenys yra nuskaitomi iš .txt tipo failo, bei suskaičiuojamas GP su pasirinktinai mediana arba vidurkiu. Galutinis rezultatas yra pateikiamas naujame .txt faile.
+Tai yra programa, kuri automatiškai sukuria failą iš vartotojo pasirinkto kiekio studentų. Suskaičiuoja jų galutinį pažymį bei išveda tuos studentus į du naujus failus Mokiniai_Galvotukai.txt ir Mokiniai_Nuskriaustukai.txt. Taip pat programa apskaičiuoja failo kūrimo, failo nuskaitymo, rūšiavimo, išvedimo kodų trukmės laiką sekundėmis.
+Yra keli įkelti failai su 1000, 10000 ir 100000 studentų. Su daugiau studentų tiesiog GitHub neleidžia įkelti, nes per didelis failas. Tačiau žiūrint laiką preliminariai jeigu vartotojas pasirinktų viską padaryti su 10000000 studentų, tuomet programai visa tai truktų ~10 minučių.
