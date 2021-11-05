@@ -201,9 +201,9 @@ int main() {
 	auto startas5 = chrono::high_resolution_clock::now(); //STARTAS//
 
 
-	for (int j = 0; j < studentu_kiekis; j++) {
-		if (get(visi_studentai, j).GALPAZ >= atskaitos_pazymio_taskas) {
-			galvotuku_failas << get(visi_studentai, j).Vard << setw(20) << get(visi_studentai, j).Pav << setw(20) << get(visi_studentai, j).GALPAZ << endl;
+	for (int j = 0; j < galvotuku_skaicius; j++) {
+		if (get(galvociai, j).GALPAZ >= atskaitos_pazymio_taskas) {
+			galvotuku_failas << get(galvociai, j).Vard << setw(20) << get(galvociai, j).Pav << setw(20) << get(galvociai, j).GALPAZ << endl;
 		}
 	}
 
@@ -216,6 +216,12 @@ int main() {
 
 	return 0;
 }
+
+
+
+
+
+
 
 
 
