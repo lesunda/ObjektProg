@@ -1,3 +1,7 @@
+***DĖMESIO***
+***!!!***
+Kiekviename faile, kurio pavadinime slepiasi žodis PAPILDYMAS reiškia, kad aš klausydamasis savo grupiokų atsiskaitymų ir tai, kad prašėte jų ištaisyti savo klaidas, patobulinau savo programą, kadangi pas mane buvo panašios klaidos. Įdėta mediana į skaičiavimus, bei dalis programos išskirstyta i header tipo failus. Pagrindinis darbas buvo įkeltas laiku.
+***!!!***
 ***V0.5***
 
 Tai yra visiškai identiškai ta pati programa, kuri buvo ir V0.4 užduotyje. Tik vietoj std::vector<studentas> pakeista į std::list<studentas>. Ši programa išveda tik laiką, per kurį yra nuskaitomi pagrindiniai duomenys ir surūšiuojami studentai į dvi grupes.
