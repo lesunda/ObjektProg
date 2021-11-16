@@ -1,6 +1,7 @@
 ***DĖMESIO***
 ***!!!***
 Kiekviename faile, kurio pavadinime slepiasi žodis PAPILDYMAS reiškia, kad aš klausydamasis savo grupiokų atsiskaitymų ir tai, kad prašėte jų ištaisyti savo klaidas, patobulinau savo programą, kadangi pas mane buvo panašios klaidos. Įdėta mediana į skaičiavimus, bei dalis programos išskirstyta i header tipo failus. Pagrindinis darbas buvo įkeltas laiku.
+Atnaujinta 2021-11-16.
 ***!!!***
 
 ***V0.5***
