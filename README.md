@@ -4,7 +4,7 @@ Taigi, remiantis pirmąją strategija programgos užtrukti laikai yra:
 
 **1) 1strategija + vektorius**
 
-![image](https://user-images.githubusercontent.com/91281608/142681518-fe8e7af2-8529-49e5-ab07-81e7b3b96002.png)
+![image](https://user-images.githubusercontent.com/91281608/142682746-1f99173e-eea3-4f03-aee2-e75c37a8eab7.png)
 
 ![image](https://user-images.githubusercontent.com/91281608/142681638-e78d4249-3d48-40f7-a51d-f039b0d7d17e.png)
 
