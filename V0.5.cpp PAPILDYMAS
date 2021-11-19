@@ -55,9 +55,10 @@ double medianos_skaiciavimas(vector<int> kiekvieno_mok_pazymiai) {
 	}
 
 }
-//--------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------
+
 int pagrindinio_failo_kurimas(vector<int> studentu_skaicius) {
 	int studentu_kiekis;
 	string pasirinkimas;
@@ -166,9 +167,6 @@ studentas get(std::list<studentas> _list, int _i) {
 
 int main() {
 
-	
-
-
 
 	vector<int> studentu_skaicius;
 	int studentu_kiekis = pagrindinio_failo_kurimas(studentu_skaicius);
@@ -176,8 +174,6 @@ int main() {
 	list<studentas> visi_studentai;
 	pagrindinio_failo_nuskaitymas(visi_studentai, studentu_kiekis);
 
-	int galvotuku_skaicius = 0;
-	int nuskriaustuku_skaicius = 0;
 
 	list<studentas> galvociai;
 	list<studentas> nuskriaustukai;
@@ -192,11 +188,11 @@ int main() {
 	for (int m = 0; m < studentu_kiekis; m++) {
 		if (get(visi_studentai, m).GALPAZ < atskaitos_pazymio_taskas) {
 			nuskriaustukai.push_back(get(visi_studentai, m));
-			nuskriaustuku_skaicius++;
+			
 		}
 		else {
 			galvociai.push_back(get(visi_studentai, m));
-			galvotuku_skaicius++;
+		
 		}
 	}
 
@@ -208,14 +204,14 @@ int main() {
 
 
 	string failo_pavadinimas;
-	failo_pavadinimas = "Mokiniai_Nuskriaustukai " + to_string(studentu_kiekis - galvotuku_skaicius) + ".txt";
+	failo_pavadinimas = "Mokiniai_Nuskriaustukai " + to_string(studentu_kiekis - galvociai.size()) + ".txt";
 	ofstream nuskriaustuku_failas(failo_pavadinimas);
 
 
 	auto startas4 = chrono::high_resolution_clock::now(); //STARTAS//
 
 
-	for (int i = 0; i < nuskriaustuku_skaicius; i++) {
+	for (int i = 0; i < nuskriaustukai.size(); i++) {
 		if (get(nuskriaustukai, i).GALPAZ < 5.00 < atskaitos_pazymio_taskas) {
 			nuskriaustuku_failas << get(nuskriaustukai, i).Vard << setw(20) << get(nuskriaustukai, i).Pav << setw(20) << get(nuskriaustukai, i).GALPAZ << endl;
 		}
@@ -228,14 +224,14 @@ int main() {
 
 
 
-	failo_pavadinimas = "Mokiniai_Galvotukai " + to_string(studentu_kiekis - nuskriaustuku_skaicius) + ".txt";
+	failo_pavadinimas = "Mokiniai_Galvotukai " + to_string(studentu_kiekis - nuskriaustukai.size()) + ".txt";
 	ofstream galvotuku_failas(failo_pavadinimas);
 
 
 	auto startas5 = chrono::high_resolution_clock::now(); //STARTAS//
 
 
-	for (int j = 0; j < galvotuku_skaicius; j++) {
+	for (int j = 0; j < galvociai.size(); j++) {
 		if (get(galvociai, j).GALPAZ >= atskaitos_pazymio_taskas) {
 			galvotuku_failas << get(galvociai, j).Vard << setw(20) << get(galvociai, j).Pav << setw(20) << get(galvociai, j).GALPAZ << endl;
 		}
