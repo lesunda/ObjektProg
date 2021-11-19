@@ -16,5 +16,11 @@ Taigi, remiantis pirmąją strategija programgos užtrukti laikai yra:
 
 **2) 1strategija + listas**
 
+![image](https://user-images.githubusercontent.com/91281608/142684814-80bc537f-bc94-4256-9daf-c29a9a4d3d2b.png)
+
+![image](https://user-images.githubusercontent.com/91281608/142684989-2b09d6df-27e4-48bd-a7d9-34813866f9f1.png)
+
+Na ir toliau imant didesnį skaičių studentų vien tik rūšiavimas į dvi skirtingas grupes t.y nuskriaustukų ir galvotukų truko virs 10 minučių, tad programą tiesiog išjungiau. Dar daugiau studentų - dar daugiau laiko.
+
 
 
