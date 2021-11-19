@@ -11,3 +11,4 @@ Taigi, remiantis pirmąją strategija programgos užtrukti laikai yra:
 ![image](https://user-images.githubusercontent.com/91281608/142689212-4f537067-89d7-48a6-9d7f-5fde244b5f3b.png)
 
 Na o toliau ties studentų rūšiavimo programa dirbo ilgiau negu 5min, tad išjungiau. Matosi akivaizdus programos lėtesnis veikimas *antrąja* strategija.
+2-a strategija su list'u kolkas neveikia.
