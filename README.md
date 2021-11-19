@@ -14,7 +14,7 @@ Taigi, remiantis pirmąją strategija programgos užtrukti laikai yra:
 
 ![image](https://user-images.githubusercontent.com/91281608/142682378-d0993d92-e029-4581-8d6f-5eac72cc7266.png)
 
-**1) 1strategija + listas**
+**2) 1strategija + listas**
 
 
 
