@@ -2,28 +2,18 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <vector>
+#include <list>
 #include <numeric>
+#include <algorithm>
 #include <chrono>
 #include <list>
-
-using namespace std;
-
-struct studentas {
-	std::string Vard, Pav;
-	float GALPAZ = 0;
-};
-
+#include "studentas.h"
+#include "pagrindinio_failo_nuskaitymas.h"
+#include "random_pazymiu_sudarymas.h"
 //--------------------------------------------------------------------------------------------------------------------------------------------------
 
-int random_pazymiu_sudarymas() {
-	return rand() % 10 + 1;
-}
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------
-
-vector<int> automatinis_pazymiu_generavimas_kiekv_stud(int pazymiu_skaicius) {
-	vector<int> kiekvieno_mok_pazymiai;
+list<int> automatinis_pazymiu_generavimas_kiekv_stud(int pazymiu_skaicius) {
+	list<int> kiekvieno_mok_pazymiai;
 	for (int i = 0; i < pazymiu_skaicius; i++) {
 		kiekvieno_mok_pazymiai.push_back(random_pazymiu_sudarymas());
 	}
@@ -32,139 +22,165 @@ vector<int> automatinis_pazymiu_generavimas_kiekv_stud(int pazymiu_skaicius) {
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------
 
-double galutinio_pazymio_skaiciavimas(vector<int> kiekvieno_mok_pazymiai) {
+double galutinio_pazymio_skaiciavimas_su_vidurkiu(list<int> kiekvieno_mok_pazymiai) {
 	studentas Eil;
 	Eil.GALPAZ = 0.4 * accumulate(kiekvieno_mok_pazymiai.begin(), kiekvieno_mok_pazymiai.end(), 0) / kiekvieno_mok_pazymiai.size() + 0.6 * random_pazymiu_sudarymas();
 	return Eil.GALPAZ;
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------
+double medianos_skaiciavimas(list<int> kiekvieno_mok_pazymiai) {
+	double median;
+    auto itr = kiekvieno_mok_pazymiai.begin();
 
-int pagrindinio_failo_kurimas(vector<int> studentu_skaicius) {
+    // n is even
+    if(kiekvieno_mok_pazymiai.size() % 2 == 0 ) {
+        for( int i = 0 ; i < kiekvieno_mok_pazymiai.size() / 2 ; i ++ ) {
+            itr++;
+        }
+
+        median = ( (double)*itr + *--itr ) / 2;
+    }
+    // n is odd
+    else {
+        for( int i = 0 ; i < kiekvieno_mok_pazymiai.size() / 2 ; i ++ ) {
+            itr++;
+        }
+
+        median = *itr;
+    }
+}
+//--------------------------------------------------------------------------------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------
+int pagrindinio_failo_kurimas(list<int> studentu_skaicius) {
 	int studentu_kiekis;
+	string pasirinkimas;
+
+
 	cout << "Iveskite skaiciu keliu studentu rezultatus noresite matyti:  " << endl;
 	cin >> studentu_kiekis;
-	cout << "------------------------------------------------------------------------------------------------" << endl;
+	/*cout << "Iveskite kaip noresite skaiciuoti galutini pazymi. Jeigu su mediana rasykite M. Su vidurkiu rasykite V." << endl;
+	cin >> pasirinkimas;*/
 
 
-	string pagr_failo_pav = "Visi_Studentai" + to_string(studentu_kiekis) + ".txt";
+		cout << "------------------------------------------------------------------------------------------------" << endl;
+
+		string pagr_failo_pav = "Visi_Studentai" + to_string(studentu_kiekis) + ".txt";
 
 
-	auto startas1 = chrono::high_resolution_clock::now(); //STARTAS//
+		auto startas1 = chrono::high_resolution_clock::now(); //STARTAS//
 
 
-	ofstream pagr_failo_spausd(pagr_failo_pav);
-	vector<int> mokinio_pazymiai;
+		ofstream pagr_failo_spausd(pagr_failo_pav);
+		list<int> mokinio_pazymiai;
 
-	pagr_failo_spausd << setw(20) << left << "Vardenis"
-		<< setw(20) << left << "Pavardenis"
-		<< setw(20) << left << "Galutinis(Vid.)" << endl;
-
-
-
-	for (int s = 1; s <= studentu_kiekis; s = s + 1) {
-		mokinio_pazymiai = automatinis_pazymiu_generavimas_kiekv_stud(5);
-		pagr_failo_spausd << setw(20) << "Vardenis" + to_string(s) << setw(20) << "Pavardenis" + to_string(s) << setw(20) << galutinio_pazymio_skaiciavimas(mokinio_pazymiai) << endl;
-		mokinio_pazymiai.clear();
-
-	}
-
-	auto endas1 = chrono::high_resolution_clock::now();  //PABAIGA//
-	chrono::duration<double> skirtumas1 = endas1 - startas1;
-
-
-	//cout << to_string(studentu_kiekis) + " studentu pagrindinis failo kurimas uztruko " << skirtumas1.count() << " sekundziu." << endl;
-
-	return studentu_kiekis;
-}
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------
-
-int pagrindinio_failo_nuskaitymas(list<studentas>& Eil, int stud_skaicius) {
-	int studento_numeris = 0;
-	ifstream failo_nuskaitymas;
-	string pavadinimas = "Visi_Studentai" + to_string(stud_skaicius) + ".txt";
-	string n;
-	float skirtumas2 = 0;
-	studentas dellisto;
-
-
-	failo_nuskaitymas.open(pavadinimas);
-	if (failo_nuskaitymas.is_open()) {
-
-		auto startas2 = chrono::high_resolution_clock::now(); //STARTAS//
-
-		getline(failo_nuskaitymas >> ws, n);
-
-
-		while (studento_numeris < stud_skaicius) {
-
-
-			failo_nuskaitymas >> dellisto.Vard;
-			failo_nuskaitymas >> dellisto.Pav;
-			failo_nuskaitymas >> dellisto.GALPAZ;
+		pagr_failo_spausd << setw(20) << left << "Vardenis"
+			<< setw(20) << left << "Pavardenis"
+			<< setw(20) << left << "Galutinis(Vid.)" << endl;
 
 
 
-			Eil.push_back(dellisto);
-			studento_numeris++;
+		for (int s = 1; s <= studentu_kiekis; s = s + 1) {
+			mokinio_pazymiai = automatinis_pazymiu_generavimas_kiekv_stud(5);
+			pagr_failo_spausd << setw(20) << "Vardenis" + to_string(s) << setw(20) << "Pavardenis" + to_string(s) << setw(20) << galutinio_pazymio_skaiciavimas_su_vidurkiu(mokinio_pazymiai) << endl;
+			mokinio_pazymiai.clear();
+
 		}
-		auto endas2 = chrono::high_resolution_clock::now(); //PABAIGA//
-		chrono::duration<double> skirtumas2 = endas2 - startas2;
-		cout << to_string(stud_skaicius) + " studentu duomenu nuskaitymas is pagrindinio failo uztruko " << skirtumas2.count() << " sekundziu." << endl;
 
-	}
-	return skirtumas2;
+		auto endas1 = chrono::high_resolution_clock::now();  //PABAIGA//
+		chrono::duration<double> skirtumas1 = endas1 - startas1;
+
+
+		//cout << to_string(studentu_kiekis) + " studentu pagrindinis failo kurimas uztruko " << skirtumas1.count() << " sekundziu." << endl;
+
+		return studentu_kiekis;
+
+		/*if (pasirinkimas == "m" || pasirinkimas == "M") {
+			cout << "------------------------------------------------------------------------------------------------" << endl;
+
+
+			string pagr_failo_pav = "Visi_Studentai" + to_string(studentu_kiekis) + ".txt";
+
+
+			auto startas1 = chrono::high_resolution_clock::now(); //STARTAS//
+
+
+			ofstream pagr_failo_spausd(pagr_failo_pav);
+			list<int> mokinio_pazymiai;
+
+			pagr_failo_spausd << setw(20) << left << "Vardenis"
+				<< setw(20) << left << "Pavardenis"
+				<< setw(20) << left << "Galutinis(Med.)" << endl;
+
+
+
+			for (int s = 1; s <= studentu_kiekis; s = s + 1) {
+				mokinio_pazymiai = automatinis_pazymiu_generavimas_kiekv_stud(5);
+				pagr_failo_spausd << setw(20) << "Vardenis" + to_string(s) << setw(20) << "Pavardenis" + to_string(s) << setw(20) << medianos_skaiciavimas(mokinio_pazymiai) << endl;
+				mokinio_pazymiai.clear();
+
+			}
+
+			auto endas1 = chrono::high_resolution_clock::now();  //PABAIGA//
+			chrono::duration<double> skirtumas1 = endas1 - startas1;
+
+
+			cout << to_string(studentu_kiekis) + " studentu pagrindinis failo kurimas uztruko " << skirtumas1.count() << " sekundziu." << endl;
+
+			return studentu_kiekis;
+		}*/
+
+
+
+	
 }
+
 //--------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-studentas get(std::list<studentas> _list, int _i) {
-	std::list<studentas>::iterator it = _list.begin();                   
-	                                                                           //?????
+/*studentas get(std::list<studentas> _list, int _i) {
+	std::list<studentas>::iterator it = _list.begin();
+	//?????
 	for (int i = 0; i < _i; i++) {
 		++it;
 	}
 	return *it;
-}
+}*/
+
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------
 
 int main() {
-	vector<int> studentu_skaicius;
+
+
+	list<int> studentu_skaicius;
 	int studentu_kiekis = pagrindinio_failo_kurimas(studentu_skaicius);
 
 	list<studentas> visi_studentai;
 	pagrindinio_failo_nuskaitymas(visi_studentai, studentu_kiekis);
 
-	int galvotuku_skaicius = 0;
-	int nuskriaustuku_skaicius = 0;
 
 	list<studentas> galvociai;
 	list<studentas> nuskriaustukai;
 
-	float atskaitos_pazymio_taskas = 5.00;
+	float atskaitos_pazymio_taskas = 5;
 
 
 	auto startas3 = chrono::high_resolution_clock::now(); //STARTAS//
 
-
-
-	for (int m = 0; m < studentu_kiekis; m++) {
-		if (get(visi_studentai, m).GALPAZ < atskaitos_pazymio_taskas) {
-			nuskriaustukai.push_back(get(visi_studentai, m));
-			nuskriaustuku_skaicius++;
+	
+	for (auto i : visi_studentai)
+	{
+		if (i.GALPAZ >= atskaitos_pazymio_taskas)
+		{
+			galvociai.push_back(i);
+		}
+		else
+		{
+			nuskriaustukai.push_back(i);
 		}
 	}
-
-
-	for (int j = 0; j < studentu_kiekis; j++) {
-		if (get(visi_studentai, j).GALPAZ >= atskaitos_pazymio_taskas) {
-			galvociai.push_back(get(visi_studentai, j));
-			galvotuku_skaicius++;
-		}
-	}
-
 
 
 	auto endas3 = chrono::high_resolution_clock::now(); //PABAIGA//
@@ -174,18 +190,15 @@ int main() {
 
 
 	string failo_pavadinimas;
-	failo_pavadinimas = "Mokiniai_Nuskriaustukai " + to_string(studentu_kiekis - galvotuku_skaicius) + ".txt";
+	failo_pavadinimas = "Mokiniai_Nuskriaustukai " + to_string(studentu_kiekis - galvociai.size()) + ".txt";
 	ofstream nuskriaustuku_failas(failo_pavadinimas);
 
 
 	auto startas4 = chrono::high_resolution_clock::now(); //STARTAS//
 
 
-	for (int i = 0; i < nuskriaustuku_skaicius; i++) {
-		if (get(nuskriaustukai, i).GALPAZ < 5.00 < atskaitos_pazymio_taskas) {
-			nuskriaustuku_failas << get(nuskriaustukai, i).Vard << setw(20) << get(nuskriaustukai, i).Pav << setw(20) << get(nuskriaustukai, i).GALPAZ << endl;
-		}
-
+	for (auto const& i : nuskriaustukai) {
+		nuskriaustuku_failas << i.Vard << setw(20) << i.Pav << setw(20) << i.GALPAZ << endl;
 	}
 
 	auto endas4 = chrono::high_resolution_clock::now(); //PABAIGA//
@@ -194,17 +207,15 @@ int main() {
 
 
 
-	failo_pavadinimas = "Mokiniai_Galvotukai " + to_string(studentu_kiekis - nuskriaustuku_skaicius) + ".txt";
+	failo_pavadinimas = "Mokiniai_Galvotukai " + to_string(studentu_kiekis - nuskriaustukai.size()) + ".txt";
 	ofstream galvotuku_failas(failo_pavadinimas);
 
 
 	auto startas5 = chrono::high_resolution_clock::now(); //STARTAS//
 
 
-	for (int j = 0; j < galvotuku_skaicius; j++) {
-		if (get(galvociai, j).GALPAZ >= atskaitos_pazymio_taskas) {
-			galvotuku_failas << get(galvociai, j).Vard << setw(20) << get(galvociai, j).Pav << setw(20) << get(galvociai, j).GALPAZ << endl;
-		}
+	for (auto const& i : galvociai) {
+		galvotuku_failas << i.Vard << setw(20) << i.Pav << setw(20) << i.GALPAZ << endl;
 	}
 
 
@@ -216,12 +227,6 @@ int main() {
 
 	return 0;
 }
-
-
-
-
-
-
 
 
 
